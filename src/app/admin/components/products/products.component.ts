@@ -3,7 +3,7 @@ import { BaseComponent, SpinnerType } from '../../../base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClientService } from '../../../services/common/http-client.service';
 import { data } from 'jquery';
-import { Product } from '../../../contracts/product';
+
 
 @Component({
   selector: 'app-products',
@@ -18,9 +18,9 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   }
   ngOnInit(): void {
     this.showSpinner(SpinnerType.BallAtom)
-    this.httpClientService.get<Product[]>({
-      controller: "products"
-    }).subscribe(data => console.log(data));
+    // this.httpClientService.get<Product[]>({
+    //   controller: "products"
+    // }).subscribe(data => console.log(data));
 
     // this.httpClientService.post({
     //   controller: "products"
@@ -45,10 +45,10 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     //   "08b9f2f5-e064-4e7a-8e3d-ca9636868fb0"
     // ).subscribe();
 
-    this.httpClientService.get({
-      baseUrl: "https://jsonplaceholder.typicode.com",
-      controller: "posts"
-    }).subscribe(data => console.log(data))
+    // this.httpClientService.get({
+    //   baseUrl: "https://jsonplaceholder.typicode.com",
+    //   controller: "posts"
+    // }).subscribe(data => console.log(data))
 
   }
 
