@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ProductService } from '../../../../services/common/models/product.service';
 import { Create_Product } from '../../../../contracts/create_product';
 import { parse } from 'path';
@@ -19,6 +19,8 @@ export class CreateComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @Output() createdProduct: EventEmitter<Create_Product> = new EventEmitter();
+
   create(name: HTMLInputElement, stock: HTMLInputElement, price: HTMLInputElement) {
     this.showSpinner(SpinnerType.BallAtom);
     const create_product: Create_Product = new Create_Product();
@@ -26,7 +28,7 @@ export class CreateComponent extends BaseComponent implements OnInit {
     create_product.stock = parseInt(stock.value);
     create_product.price = parseFloat(price.value);
 
-    if(!name.value){
+    if (!name.value) {
       this.alertify.message("Lütfen Ürün Adını Giriniz", {
         dismissOthers: true,
         messageType: MessageType.Error,
@@ -35,7 +37,7 @@ export class CreateComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if(parseInt(stock.value)<0){
+    if (parseInt(stock.value) < 0) {
       this.alertify.message("Stok Negatif Olamaz", {
         dismissOthers: true,
         messageType: MessageType.Error,
@@ -50,11 +52,12 @@ export class CreateComponent extends BaseComponent implements OnInit {
         messageType: MessageType.Success,
         position: Position.TopRight
       });
+      this.createdProduct.emit(create_product);
     }, errorMessage => {
-      this.alertify.message(errorMessage,{
-        dismissOthers:true,
-        messageType:MessageType.Error,
-        position:Position.TopRight
+      this.alertify.message(errorMessage, {
+        dismissOthers: true,
+        messageType: MessageType.Error,
+        position: Position.TopRight
       })
     });
 
